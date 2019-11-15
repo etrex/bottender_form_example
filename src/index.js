@@ -17,18 +17,6 @@ function form(path, action){
         return false;
       }
 
-      // form completed
-      if(context.state.form.completed) {
-        // reset form
-        context.state.form = {
-          path: null,
-          params: {},
-          waitingFor: null,
-          validateRegex: /[\s\S]*/
-        }
-        return false;
-      }
-
       // form module just support text input for now.
       if(context.event.isText == false){
         return false;
@@ -105,6 +93,7 @@ async function postPersonalDataForm(context){
     await context.sendText('Please type your name:');
     return
   }
+
   if(phone == null){
     prompt(context, {
       path:'/form',
@@ -126,7 +115,6 @@ async function postPersonalDataForm(context){
   }
 
   if(confirm == 'yes'){
-    context.state.form.completed = true
     await context.sendText(`Thank you for your help, your personal data was stored correctly.`);
   }
 }
