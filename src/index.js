@@ -62,9 +62,16 @@ async function getPersonalDataForm(context){
 
 async function postPersonalDataForm(context){
   const confirm = context.state.form.params.confirm;
+
   // form reset
   if(confirm == 'no'){
     context.state.form.params = {}
+  }
+
+  // field reset
+  if(confirm == 'phone' || confirm == 'name'){
+    context.state.form.params[confirm] = null
+    context.state.form.params.confirm = null
   }
 
   const name = context.state.form.params.name;
@@ -93,9 +100,9 @@ async function postPersonalDataForm(context){
     prompt(context, {
       path:'/form',
       param: 'confirm',
-      validateRegex: /yes|no/
+      validateRegex: /yes|no|name|phone/
     })
-    await context.sendText(`${name}, your phone number is ${phone}, right? (yes|no)`);
+    await context.sendText(`${name}, your phone number is ${phone}, right?, if not, which part you want to refill? (yes|name|phone)`);
     return
   }
 
