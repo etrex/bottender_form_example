@@ -9,3 +9,6 @@ This project was bootstrapped with
 
 # With confirm
 ![image](https://user-images.githubusercontent.com/563929/68928543-483b0280-07c5-11ea-931a-025672f47d30.png)
+
+# Field editing 
+![image](https://user-images.githubusercontent.com/563929/68937857-25feb000-07d8-11ea-8724-9d034f437684.png)
