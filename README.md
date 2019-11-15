@@ -1,52 +1,11 @@
 This project was bootstrapped with
 [Bottender](https://github.com/Yoctol/bottender) init script.
 
-## Sending Feedback
+## Happy path
+![image](https://user-images.githubusercontent.com/563929/68928438-05792a80-07c5-11ea-9a8d-c091d5a31168.png)
 
-Always feel free to open issue to
-[Bottender](https://github.com/Yoctol/bottender/issues).
+# Validator and redirect to main menu
+![image](https://user-images.githubusercontent.com/563929/68928790-e4fda000-07c5-11ea-836d-332161370213.png)
 
-## Folder Structure
-
-After creation, your project should look like this:
-
-```
-my-bot/
-  .gitignore
-  node_modules/
-  bottender.config.js
-  index.js
-  package.json
-  README.md
-  yarn.lock
-```
-
-### index.js
-
-All functionalities start from here.\
-Mainly it's a server which listen on port 5000. You are encouraged to add more [event listener](https://bottender.js.org/docs/APIReference-Event?new)
-and [`Handler`](https://bottender.js.org/docs/APIReference-Handler?new) to enrich the bot.
-
-See more examples, please refer to
-[Bottender examples](https://github.com/Yoctol/bottender/tree/master/examples).
-
-### bottender.config.js
-
-The config file for the bot.\
-We suggests you to put all platform configs into this file and use it as a parameter
-of createServer.
-
-## Available Scripts
-
-There are two default scripts you can run:
-
-### `npm run dev`
-
-Run the bot in the development mode.\
-It will automatically restart the bot if there are any changes in `index.js`.\
-For more information, check [nodemon's repo](https://github.com/remy/nodemon)
-
-### `npm start`
-
-Run the bot without being monitored.\
-The bot won't be restarted when you change anything in `index.js`
+# With confirm
+![image](https://user-images.githubusercontent.com/563929/68928543-483b0280-07c5-11ea-931a-025672f47d30.png)
