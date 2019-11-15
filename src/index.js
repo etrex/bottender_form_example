@@ -1,3 +1,4 @@
+const { chain } = require('bottender');
 const { router, text } = require('bottender/router');
 
 ////////////////////////// in bottender framework
@@ -10,12 +11,21 @@ function form(path, action){
       if(context.state.form == null){
         return false;
       }
-      // form completed
-      if(context.state.form.completed) {
-        return false;
-      }
+
       // other form
       if(context.state.form.path != path){
+        return false;
+      }
+
+      // form completed
+      if(context.state.form.completed) {
+        // reset form
+        context.state.form = {
+          path: null,
+          params: {},
+          waitingFor: null,
+          validateRegex: /[\s\S]*/
+        }
         return false;
       }
 
@@ -37,17 +47,26 @@ function form(path, action){
 
 // form waiting
 function prompt(context, {path, param, validateRegex}){
+  context.state.form.inForm = true
   context.state.form.path = path
   context.state.form.waitingFor = param
   context.state.form.validateRegex = validateRegex || /[\s\S]*/
 }
 
-
-
-
-
-
-
+function formMiddleware(context, { next }){
+  // when escape
+  if(context.state.form.inForm != true){
+    // reset form
+    context.state.form = {
+      path: null,
+      params: {},
+      waitingFor: null,
+      validateRegex: /[\s\S]*/
+    }
+  }
+  context.state.form.inForm = false;
+  return next;
+}
 
 /////////////////// outside of bottender framework
 async function menu(context){
@@ -102,7 +121,7 @@ async function postPersonalDataForm(context){
       param: 'confirm',
       validateRegex: /yes|no|name|phone/
     })
-    await context.sendText(`${name}, your phone number is ${phone}, right?, if not, which part you want to refill? (yes|name|phone)`);
+    await context.sendText(`${name}, your phone number is ${phone}, right?, if not, which part you want to refill? (yes|no|name|phone)`);
     return
   }
 
@@ -113,10 +132,13 @@ async function postPersonalDataForm(context){
 }
 
 module.exports = async function App(context) {
-  return router([
-    text('menu', menu), //get menu anyway
-    text("/form", getPersonalDataForm), // get request
-    form("/form", postPersonalDataForm), // post request
-    text("*", menu)
+  return chain([
+    formMiddleware,
+    router([
+      text('menu', menu), //get menu anyway
+      text("/form", getPersonalDataForm), // get request
+      form("/form", postPersonalDataForm), // post request
+      text("*", menu)
+    ])
   ])
 };
